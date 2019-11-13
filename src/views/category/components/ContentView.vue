@@ -3,7 +3,7 @@
  * @Motto: 求知若渴,虚心若愚
  * @Github: https://github.com/Geek-James/ddBuy
  * @掘金: https://juejin.im/user/5c4ebc72e51d4511dc7306ce
- * @LastEditTime: 2019-11-12 09:53:55
+ * @LastEditTime: 2019-11-13 10:41:58
  * @Description: 分类模块->可滑动标题组件
  * @FilePath: /ddBuy/src/views/category/components/ContentView.vue
  -->
@@ -191,7 +191,7 @@ export default {
   },
   methods: {
     // 0.延展Vuex的方法
-    ...mapMutations(['ADD_GOODS']),
+    ...mapMutations(['ADD_GOODS', 'ADD_TO_CART']),
     // 1.titleScroll 滚动初始化
     _initTitleScroll () {
       let contentWrapperWidth = 120;
@@ -242,25 +242,9 @@ export default {
       }, 100);
     },
     // 4.添加购物车
-    addToCart (goods) {
-      // 4.1 判断是否登录
-      if (this.userInfo.token) {
-        // 4.2 将数据保存到vuex的shopCart中
-        this.ADD_GOODS({
-          goodsID: goods.id,
-          goodsName: goods.name,
-          smallImage: goods.small_image,
-          goodsPrice: goods.price
-        });
-        Toast({
-          message: '已加入购物车',
-          duration: 800
-        });
-      } else {
-        // 4.3 跳转到登录界面
-        this.$router.push('/login');
-      }
-    },
+    ...mapMutations({
+      addToCart: 'ADD_TO_CART'
+    }),
     // 5.点击下拉菜单
     menuClick () {
       this.menuDown = !this.menuDown;
@@ -278,6 +262,13 @@ export default {
       let subTitleWrapperWidth = this.$refs.subTitleWrapper.clientWidth;
       let ulContentWidth = this.$refs.ulContent.clientWidth;
       this.isShowDropMenu = ulContentWidth > subTitleWrapperWidth ? true : false;
+    },
+    // 8.商品详情
+    getDetails (item) {
+      Toast({
+        message: '商品详情暂未实现哦~',
+        duration: 800
+      });
     }
   }
 }
